@@ -10,7 +10,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.testscanner.databinding.ActivityMainBinding
-import com.google.zxing.integration.android.IntentIntegrator
+
 import com.journeyapps.barcodescanner.ScanOptions
 
 import android.widget.Toast
@@ -32,12 +32,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
 
-
         //Si pulsa boton arranca scanner
         binding.button.setOnClickListener{
             //lanzaScanner.launch(ScanOptions())
 
-
+            //Personifico ciertas opciones
             val options = ScanOptions()
             //options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES)
             options.setPrompt("Scan a barcode")
@@ -49,9 +48,8 @@ class MainActivity : AppCompatActivity() {
             options.setTimeout(25000)
             options.setTorchEnabled(true)
 
+            //Lanza el scanner podemos prescindir de lo anterior
             lanzaScanner.launch(options)
-
-
 
         }
     }
@@ -59,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     // Registre el lanzador y el controlador de resultados
     private val lanzaScanner = registerForActivityResult(ScanContract())
     {    result: ScanIntentResult ->
-        if (result.contents == null) { }
+        if (result.contents == null) {/*No hace nada si no ha recuperado nada*/ }
         else {
             //Muestra scan en EditView @+id/textViewReadText
             binding.textViewReadText.setText(result.contents)//Muestra el valor scaneado en viewText
